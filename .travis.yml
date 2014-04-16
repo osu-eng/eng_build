@@ -28,17 +28,17 @@ install:
   - drush make --yes --prepare-install build-eng.make drupal
 
   # Setup files
-  # - sudo chmod -R 777 drupal/sites/all
+  #- sudo chmod -R 777 drupal/sites/all
 
   # Setup display for Selenium
-   - export DISPLAY=:99.0
-   - sh -e /etc/init.d/xvfb start
-   - sleep 5
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 5
 
   # Get Selenium
-   - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.37.0.jar
-   - java -jar selenium-server-standalone-2.37.0.jar > /dev/null 2>&1 &
-   - sleep 5
+  - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.37.0.jar
+  - java -jar selenium-server-standalone-2.37.0.jar > /dev/null 2>&1 &
+  - sleep 5
 
   # Disable sendmail
   - echo sendmail_path=`which true` >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
