@@ -18,6 +18,9 @@ install:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - composer global require --no-interaction drush/drush:6.*
 
+  # Fix host authenticity issue
+  - echo -e "Host code.osu.edu\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
   # Get the platform
   - drush make --yes --prepare-install build-eng.make drupal
 
