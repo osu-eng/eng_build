@@ -1,0 +1,60 @@
+# Inspired by panopoly: https://github.com/lsolesen/panopoly/blob/travis/.travis.yml
+
+language: php
+
+php:
+  - 5.3
+
+mysql:
+  database: drupal
+  username: root
+  encoding: utf8
+
+install:
+  - sudo apt-get update > /dev/null
+  - "mysql -e 'create database drupal;'"
+
+  # Install latest Drush 6.
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - composer global require --no-interaction drush/drush:6.*
+
+  # Build Behat dependencies
+  - cd ./tests/behat
+  - composer install --no-interaction
+  - cp behat.example.yml behat.travis.yml
+  - cd ../../../
+
+  # Get the platform
+  - drush make --yes --prepare-install build-eng.make drupal
+
+  # Setup files
+  # - sudo chmod -R 777 drupal/sites/all
+
+  # Setup display for Selenium
+   - export DISPLAY=:99.0
+   - sh -e /etc/init.d/xvfb start
+   - sleep 5
+
+  # Get Selenium
+   - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.37.0.jar
+   - java -jar selenium-server-standalone-2.37.0.jar > /dev/null 2>&1 &
+   - sleep 5
+
+  # Disable sendmail
+  - echo sendmail_path=`which true` >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
+before_script:
+
+  # Do the site install 
+  - cd drupal/sites/default
+  - drush si eng --db-url=mysql://root:@127.0.0.1/drupal --account-name=admin --account-pass=admin --site-mail=admin@example.com --site-name="Eng build" --yes -v
+  - cd drupal
+
+  # Start the server
+  - drush runserver --server=builtin 8888 > /dev/null 2>&1 &
+  - sleep 3
+  - cd profiles/eng/tests/behat
+
+script:
+
+  - ./bin/behat --config behat.travis.yml
