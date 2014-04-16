@@ -1,4 +1,4 @@
-# Inspired by panopoly: https://github.com/lsolesen/panopoly/blob/travis/.travis.yml
+# Inspired by panopoly: https://github.com/drupalprojects/panopoly/blob/7.x-1.x/.travis.yml
 
 language: php
 
@@ -26,8 +26,7 @@ install:
 
     # Build Behat dependencies
   - cd drupal/profiles/eng/tests/behat
-  - composer install --no-interaction
-  - cp behat.example.yml behat.travis.yml
+  - composer install --prefer-source --no-interaction
   - cd ../../../../../
 
   # Setup files
@@ -48,7 +47,11 @@ install:
 
 before_script:
 
-  # Do the site install 
+  # Make the Travis tests repos agnostic by injecting drupal_root with BEHAT_PARAMS
+  - BUILD_OWNER=`dirname $TRAVIS_BUILD_DIR`
+  - export BEHAT_PARAMS="extensions[Drupal\\DrupalExtension\\Extension][drupal][drupal_root]=$BUILD_OWNER/drupal"
+
+  # Do the site install
   - cd drupal/sites/default
   - drush si eng --db-url=mysql://root:@127.0.0.1/drupal --account-name=admin --account-pass=admin --site-mail=admin@example.com --site-name="Eng build" --yes -v
 
