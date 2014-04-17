@@ -63,7 +63,7 @@ before_script:
   - until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
   - cd ../../profiles/eng/tests/behat
 
-  - drupal @testing status
+  - drush @testing status
 
   # testing site connection
   - curl -I http://127.0.0.1:8080
