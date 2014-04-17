@@ -14,9 +14,7 @@ before_install:
   - sudo apt-get update > /dev/null
 
 install:
-  - which php-cgi
-  - ls ~/.phpenv/versions/$(phpenv version-name)
-  - ls ~/.phpenv/versions/$(phpenv version-name)/bin
+
   # Create drupal database
   - "mysql -e 'create database drupal;'"
 
@@ -62,7 +60,7 @@ before_script:
   - drush si eng --db-url=mysql://root:@127.0.0.1/drupal --account-name=admin --account-pass=admin --site-mail=admin@example.com --site-name="Eng build" --yes -v
 
   # start a web server on port 80, run in the background; wait for initialization
-  - drush runserver 8080 &
+  - drush runserver --php-cgi=php-cgi 8080 &
   #- drush runserver --php-cgi=php5-cgi --dns localhost:8888 > /dev/null 2>&1 &
   - until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
   - cd ../../profiles/eng/tests/behat
