@@ -29,7 +29,7 @@ install:
   - echo -e "Host code.osu.edu\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
   # Get the platform
-  - drush make --yes --prepare-install build-eng.make drupal
+  - drush @testing make --yes --prepare-install build-eng.make drupal
 
     # Build Behat dependencies
   - cd drupal/profiles/eng/tests/behat
@@ -57,13 +57,13 @@ before_script:
 
   # Do the site install
   - cd drupal/sites/default
-  - drush si eng --db-url=mysql://root:@127.0.0.1/drupal --account-name=admin --account-pass=admin --site-mail=admin@example.com --site-name="Eng build" --yes -v
+  - drush @testing si eng --db-url=mysql://root:@127.0.0.1/drupal --account-name=admin --account-pass=admin --site-mail=admin@example.com --site-name="Eng build" --yes -v
 
   # Disable shibboleth
-  - drush vset osu_authentication_redirect_auth_to_shib FALSE
+  - drush @testing vset osu_authentication_redirect_auth_to_shib FALSE
 
   # start a web server on port 80, run in the background; wait for initialization
-  - drush rs --php-cgi=`which php-cgi` 8080 &
+  - drush @testing rs --php-cgi=`which php-cgi` 8080 &
   #- drush runserver --php-cgi=php5-cgi --dns localhost:8888 > /dev/null 2>&1 &
   - until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
   - cd ../../profiles/eng/tests/behat
