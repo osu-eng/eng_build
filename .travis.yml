@@ -10,10 +10,11 @@ mysql:
   username: root
   encoding: utf8
 
-install:
-  # Check php-cgi version
-  - php-cgi -v
+before_install:
   - sudo apt-get update > /dev/null
+
+install:
+  # Create drupal database
   - "mysql -e 'create database drupal;'"
 
   # Install latest Drush 6.
@@ -56,14 +57,14 @@ before_script:
   - cd drupal/sites/default
   - drush si eng --db-url=mysql://root:@localhost/drupal --account-name=admin --account-pass=admin --site-mail=admin@example.com --site-name="Eng build" --yes -v
 
-  # start a web server on port 8888, run in the background; wait for initialization
-  - drush runserver --server=builtin 8888 &
+  # start a web server on port 80, run in the background; wait for initialization
+  - drush runserver --server=builtin 80 &
   #- drush runserver --php-cgi=php5-cgi --dns localhost:8888 > /dev/null 2>&1 &
-  - until netstat -an 2>/dev/null | grep '8888.*LISTEN'; do true; done
+  - until netstat -an 2>/dev/null | grep '80.*LISTEN'; do true; done
   - cd ../../profiles/eng/tests/behat
 
   # testing site connection
-  - curl -I http://127.0.0.1:8888
+  - curl -I http://127.0.0.1/
 
 script:
 
