@@ -11,7 +11,8 @@ mysql:
   encoding: utf8
 
 install:
-
+  # Check php-cgi version
+  - php-cgi -v
   - sudo apt-get update > /dev/null
   - "mysql -e 'create database drupal;'"
 
@@ -56,12 +57,13 @@ before_script:
   - drush si eng --db-url=mysql://root:@localhost/drupal --account-name=admin --account-pass=admin --site-mail=admin@example.com --site-name="Eng build" --yes -v
 
   # Start the server
-  - drush runserver --server=builtin 8888 > /dev/null 2>&1 &
+  #- drush runserver --server=builtin 8888 > /dev/null 2>&1 &
+  - drush runserver --php-cgi=php5-cgi --dns localhost:8888 > /dev/null 2>&1 &
   - sleep 3
   - cd ../../profiles/eng/tests/behat
 
-  # testing drush alias
-  - drush @testing status
+  # testing site connection
+  - curl -I http://localhost:8888
 
 script:
 
