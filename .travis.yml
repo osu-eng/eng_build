@@ -59,6 +59,9 @@ before_script:
   - cd drupal/sites/default
   - drush si eng --db-url=mysql://root:@127.0.0.1/drupal --account-name=admin --account-pass=admin --site-mail=admin@example.com --site-name="Eng build" --yes -v
 
+  # Disable shibboleth
+  - drush vset osu_authentication_redirect_auth_to_shib FALSE
+
   # start a web server on port 80, run in the background; wait for initialization
   - drush rs --php-cgi=`which php-cgi` 8080 &
   #- drush runserver --php-cgi=php5-cgi --dns localhost:8888 > /dev/null 2>&1 &
