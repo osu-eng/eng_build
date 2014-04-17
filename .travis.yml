@@ -1,4 +1,4 @@
-# Inspired by panopoly: https://github.com/drupalprojects/panopoly/blob/7.x-1.x/.travis.yml
+# Inspired by panopoly: https://github.com/panopoly/panopoly/blob/7.x-1.x/.travis.yml
 
 language: php
 
@@ -36,7 +36,7 @@ install:
   - cd ../../../../../
 
   # Setup files
-  #- sudo chmod -R 777 drupal/sites/all
+  - sudo chmod -R 777 drupal/sites/all
 
   # Setup display for Selenium
   - export DISPLAY=:99.0
@@ -44,8 +44,8 @@ install:
   - sleep 5
 
   # Get Selenium
-  - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.37.0.jar
-  - java -jar selenium-server-standalone-2.37.0.jar > /dev/null 2>&1 &
+  - wget http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar
+  - java -jar selenium-server-standalone-2.41.0.jar > /dev/null 2>&1 &
   - sleep 5
 
   # Disable sendmail
