@@ -46,8 +46,7 @@ install:
 
   # Get Selenium
   - wget http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar
-  #- java -jar selenium-server-standalone-2.41.0.jar > /dev/null 2>&1 &
-  - java -jar selenium-server-standalone-2.41.0.jar &
+  - java -jar selenium-server-standalone-2.41.0.jar > /dev/null 2>&1 &
   - sleep 5
 
   # Disable sendmail
@@ -63,15 +62,9 @@ before_script:
   - drush @testing vset osu_authentication_redirect_auth_to_shib FALSE
 
   # start a web server on port 80, run in the background; wait for initialization
-  - drush @testing rs --php-cgi=`which php-cgi` 8080 &
-  #- drush runserver --php-cgi=php5-cgi --dns localhost:8888 > /dev/null 2>&1 &
+  - drush @testing rs --php-cgi=`which php-cgi` 8080 > /dev/null 2>&1 &
   - until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
   - cd ../../profiles/eng/tests/behat
-
-  - drush @testing status
-
-  # testing site connection
-  - curl -iL http://127.0.0.1:8080/user
 
 script:
 
