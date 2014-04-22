@@ -31,12 +31,16 @@ install:
   # Get the platform
   - drush @testing make --yes --prepare-install build-eng.make drupal
 
-    # Build Behat dependencies
+  # Build Behat dependencies
   - cd drupal/profiles/eng/tests/behat
   - composer install --prefer-source --no-interaction
-  - cd ../../../../../
+
+  # Get PhantomCSS dependencies
+  - cd ../phantomcss
+  - npm install
 
   # Setup files
+  - cd ../../../../../
   - sudo chmod -R 777 drupal/sites/all
 
   # Setup display for Selenium
@@ -64,11 +68,13 @@ before_script:
   # start a web server on port 80, run in the background; wait for initialization
   - drush @testing rs --php-cgi=`which php-cgi` 8080 > /dev/null 2>&1 &
   - until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
-  - cd ../../profiles/eng/tests/behat
+  - cd ../../profiles/eng/tests
 
 script:
-
+  - cd behat
   - ./bin/behat --config behat.travis.yml
+  - cd ../phantomcss
+  - npm test
 
 after_sucess:
 # put deployment code here
