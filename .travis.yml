@@ -67,7 +67,7 @@ before_script:
   # Disable shibboleth
   - drush @testing vset osu_authentication_redirect_auth_to_shib FALSE
 
-  # Install some demo content
+  # Install some demo content.
   - drush @testing dl panopoly_demo -y
   - drush @testing en panopoly_demo -y
 
