@@ -67,6 +67,10 @@ before_script:
   # Disable shibboleth
   - drush @testing vset osu_authentication_redirect_auth_to_shib FALSE
 
+  # Install some demo content
+  - drush @testing dl panopoly_demo -y
+  - drush @testing en panopoly_demo -y
+
   # start a web server on port 80, run in the background; wait for initialization
   - drush @testing rs --php-cgi=`which php-cgi` 8080 > /dev/null 2>&1 &
   - until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
