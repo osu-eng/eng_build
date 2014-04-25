@@ -14,6 +14,7 @@ before_install:
   - sudo apt-get update > /dev/null
   - echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
   - sudo apt-get install xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic ttf-mscorefonts-installer
+  - sudo fc-cache -f -v
 
 install:
 
