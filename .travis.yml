@@ -12,6 +12,7 @@ mysql:
 
 before_install:
   - sudo apt-get update > /dev/null
+  - sudo apt-get install imagemagick libmagickcore-dev graphicsmagick libcairo2-dev
 
 
 install:
