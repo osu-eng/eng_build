@@ -5,6 +5,14 @@ language: php
 php:
   - 5.4
 
+env:
+  global:
+  - secure: nLG4KxHH45R3OXGcNJRWA42K8+N5KOubrABrgRs8l6RJ0PZ5Mqh60989Cm/kD3VwXCPULMPj9XVumRSGr6WnnrvAa9JHAV63wm47N4JogISD6Xa3O5eGaVyMvPUt5G+cchLnRz2DFJBM29x6afgaXF6Y1AFrrEE/+Pyl/yCYAyI=
+  - secure: zex1rD3IIJl4A2QtjUik94ckHKbldlJu04HQADwGG+hIR4FOXBf4XnhBneFXnF/Y/7CVWD8jTtqpPGec11Mw0rKKB3z2CdiHXj1aYVxMxiQahNKVCrti8ORTfaSAtQoT3CyrZRNzmNuWJYWA5gVaQCnlUbW4IPN79vdTKlpcTEI=
+
+addons:
+  sauce_connect: true
+
 mysql:
   database: drupal
   username: root
