@@ -105,9 +105,10 @@ before_script:
   - cd ../../profiles/eng/tests
 
 script:
-  - cd behat
+  # - cd behat
   # - ./bin/behat --config behat.travis.yml
-  - cd ../webdrivercss
+  # - cd ../webdrivercss
+  - cd webdrivercss
   - npm test
 
 after_sucess:
