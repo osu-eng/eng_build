@@ -101,7 +101,7 @@ before_script:
 
   # start a web server on port 80, run in the background; wait for initialization
   # - drush @testing rs --php-cgi=`which php-cgi` 8080 > /dev/null 2>&1 &
-  - php --server 127.0.0.1:8080 --docroot $TRAVIS_BUILD_DIR/build/drupal &
+  - php --server 127.0.0.1:8080 --docroot $TRAVIS_BUILD_DIR/drupal &
 
 
   - until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
