@@ -47,11 +47,8 @@ install:
   # Get the platform
   - git config --global user.email "kildow.5@osu.edu"
   - git config --global user.name "bkildow"
-  - mkdir drupal
-  - cd drupal
-  - git clone https://${GITHUB_API_KEY}@github.com/osu-eng/eng_platform.git
-  - cp sites/default/default.settings.php sites/default/settings.php
-  - cd ..
+  - git clone https://${GITHUB_API_KEY}@github.com/osu-eng/eng_platform.git drupal
+  - cp drupal/sites/default/default.settings.php drupal/sites/default/settings.php
   # - drush @testing make --yes --prepare-install build-eng.make drupal
 
   # Build Behat dependencies
