@@ -105,7 +105,7 @@ before_script:
   #- drush @testing rs --php-cgi=`which php-cgi` 8080 &
   - until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
 
-  - curl -I 127.0.0.1:8080/demo
+  - curl -I localhost:8080/demo
   - cd ../../profiles/eng/tests
 
 script:
