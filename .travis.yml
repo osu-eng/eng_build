@@ -9,6 +9,7 @@ env:
   global:
   - secure: nLG4KxHH45R3OXGcNJRWA42K8+N5KOubrABrgRs8l6RJ0PZ5Mqh60989Cm/kD3VwXCPULMPj9XVumRSGr6WnnrvAa9JHAV63wm47N4JogISD6Xa3O5eGaVyMvPUt5G+cchLnRz2DFJBM29x6afgaXF6Y1AFrrEE/+Pyl/yCYAyI=
   - secure: zex1rD3IIJl4A2QtjUik94ckHKbldlJu04HQADwGG+hIR4FOXBf4XnhBneFXnF/Y/7CVWD8jTtqpPGec11Mw0rKKB3z2CdiHXj1aYVxMxiQahNKVCrti8ORTfaSAtQoT3CyrZRNzmNuWJYWA5gVaQCnlUbW4IPN79vdTKlpcTEI=
+  - secure: niysJYzXQ45V8gwa/06PtWVCfk3z/567ECd0yYvxJYOhGd8gXkvouv07MjwbP5UqhFHxcVRAaVNdBySLU9lZj3w7Z0+Kpc8w8PXR4sopGKwhwZ8ke5RdttwMqxC1Jl8A+5n8uTDA6kMHS3uMk4obYAsvY3BIsPjUm/ahEdtcR5w=
 
 addons:
   sauce_connect: true
@@ -44,7 +45,14 @@ install:
   - echo -e "Host code.osu.edu\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
   # Get the platform
-  - drush @testing make --yes --prepare-install build-eng.make drupal
+  - git config --global user.email "kildow.5@osu.edu"
+  - git config --global user.name "bkildow"
+  - mkdir drupal
+  - cd drupal
+  - git clone https://${GITHUB_API_KEY}@github.com/osu-eng/eng_platform.git
+  - cp sites/default/default.settings.php sites/default/settings.php
+  - cd ..
+  # - drush @testing make --yes --prepare-install build-eng.make drupal
 
   # Build Behat dependencies
   - cd drupal/profiles/eng/tests/behat
