@@ -13,8 +13,6 @@ env:
 
 addons:
   sauce_connect: true
-  hosts:
-    - localhost
 
 mysql:
   database: drupal
